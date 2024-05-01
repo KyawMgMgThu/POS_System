@@ -13,8 +13,8 @@ class ProductController extends Controller
     public function index()
     {
         //
-        $products = ModelsProduct::latest()->paginate(10);
-        dd($products)->toArray();
+        $products = ModelsProduct::latest()->paginate(5);
+        return view('products.index', compact('products'));
     }
 
     /**

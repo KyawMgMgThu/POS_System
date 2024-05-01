@@ -44,7 +44,7 @@
                     </a>
                     <ul id="product" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                         <li class="">
-                            <a href="../backend/page-list-product.html">
+                            <a href="{{ route('products.index') }}" class="{{ activeSegment('products') }}">
                                 <i class="las la-minus"></i><span>List Product</span>
                             </a>
                         </li>
