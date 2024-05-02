@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductStoreRequest;
 use App\Models\ModelsProduct;
 use Illuminate\Http\Request;
 
@@ -23,14 +24,31 @@ class ProductController extends Controller
     public function create()
     {
         //
+        return view('products.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductStoreRequest $request)
     {
         //
+        $image_path = '';
+        if ($request->hasFile('image')) {
+            $image_path = $request->file('image')->store('products');
+        }
+        $product = ModelsProduct::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'image' => $request->image,
+            'barcode' => $request->barcode,
+            'price' => $request->price,
+            'status' => $request->status
+        ]);
+        if (!$product) {
+            return redirect()->back()->with('error', 'Failed to create product');
+        }
+        return redirect()->route('products.index')->with('success', 'Product created successfully');
     }
 
     /**

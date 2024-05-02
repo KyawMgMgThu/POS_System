@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>@yield('title', config('app.name'))</title>
+    <title>@yield('navtitle', config('app.name'))</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="../../assets/images/favicon.ico" />
@@ -28,6 +28,8 @@
         @include('layouts.partials.sidebar')
 
         @include('layouts.partials.navbar')
+        @include('layouts.partials.alert.success')
+        @include('layouts.partials.alert.error')
         @yield('content')
     </div>
     <!-- Wrapper End-->
@@ -39,7 +41,7 @@
     <script src="../../assets/js/table-treeview.js"></script>
 
     <!-- Chart Custom JavaScript -->
-    <script src="../assets/js/customizer.js"></script>
+    <script src="../../assets/js/customizer.js"></script>
 
     <!-- Chart Custom JavaScript -->
     <script async src="../assets/js/chart-custom.js"></script>

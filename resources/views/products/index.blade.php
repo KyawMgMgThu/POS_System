@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-
+@section('navtitle', 'Product List')
 @section('content')
     <div class="content-page">
         <div class="container-fluid">
@@ -7,9 +7,10 @@
                 <div class="col-lg-12">
                     <div class="d-flex flex-wrap flex-wrap align-items-center justify-content-between mb-4">
                         <div>
-                            <h4 class="mb-3">Product List</h4>
+                            <h4 class="mb-3">{{ __('Product List') }}</h4>
                         </div>
-                        <a href="page-add-product.html" class="btn btn-primary add-list"><i class="las la-plus mr-3"></i>Add
+                        <a href="{{ route('products.create') }}" class="btn btn-primary add-list"><i
+                                class="las la-plus mr-3"></i>Add
                             Product</a>
                     </div>
                 </div>
