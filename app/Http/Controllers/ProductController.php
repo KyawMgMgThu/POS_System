@@ -40,7 +40,7 @@ class ProductController extends Controller
         $product = ModelsProduct::create([
             'name' => $request->name,
             'description' => $request->description,
-            'image' => $request->image,
+            'image' => $image_path,
             'barcode' => $request->barcode,
             'price' => $request->price,
             'status' => $request->status
@@ -81,5 +81,6 @@ class ProductController extends Controller
     public function destroy(ModelsProduct $modelsProduct)
     {
         //
+
     }
 }

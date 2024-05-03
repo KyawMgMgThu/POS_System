@@ -26,11 +26,12 @@
     <div class="wrapper">
 
         @include('layouts.partials.sidebar')
-
-        @include('layouts.partials.navbar')
         @include('layouts.partials.alert.success')
         @include('layouts.partials.alert.error')
+        @include('layouts.partials.navbar')
+
         @yield('content')
+
     </div>
     <!-- Wrapper End-->
     @include('layouts.partials.footer')

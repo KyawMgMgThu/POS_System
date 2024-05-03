@@ -3,8 +3,10 @@
 @section('content')
     <div class="content-page">
         <div class="container-fluid add-form-list">
+
             <div class="row">
                 <div class="col-sm-12">
+
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">
                             <div class="header-title">
@@ -50,7 +52,7 @@
                                         <div class="form-group">
                                             <label for="category">Category</label>
                                             <select name="category"
-                                                class="selectpicker @error('category')
+                                                class="form-control @error('category')
                                             is-invalid
 
                                         @enderror form-control"
@@ -109,7 +111,7 @@
                                         <div class="form-group">
                                             <label for="status">Status</label>
                                             <select name="status" id="status"
-                                                class="form-control selectpicker @error('status')
+                                                class="form-control @error('status')
                                         is-invalid
 
                                         @enderror"

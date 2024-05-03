@@ -41,8 +41,8 @@
                                         </td>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <img src="{{ $product->image }}" class="img-fluid rounded avatar-50 mr-3"
-                                                    alt="image">
+                                                <img src="{{ Storage::url($product->image) }}"
+                                                    class="img-fluid rounded avatar-50 mr-3" alt="">
                                                 <div>
                                                     {{ $product->name }}
                                                     <p class="mb-0"><small>{{ $product->description }}</small></p>
