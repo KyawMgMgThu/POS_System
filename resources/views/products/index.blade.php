@@ -53,23 +53,23 @@
                                         <td>Beauty</td>
                                         <td>{{ $product->price }}</td>
 
-                                        <td>{{ $product->status }}</td>
+                                        <td
+                                            class="badge mr-2 mt-4 rounded-pill badge-{{ $product->status ? 'success' : 'danger' }}">
+                                            {{ $product->status ? 'Active' : 'Inactive' }}</td>
                                         <td>{{ $product->created_at }}</td>
                                         <td>{{ $product->updated_at }}</td>
                                         <td>
                                             <div class="d-flex align-items-center list-action">
-                                                <a class="badge badge-info mr-2" data-toggle="tooltip" data-placement="top"
-                                                    title="" data-original-title="View"
-                                                    href="{{ route('products.show', $product) }}"><i
-                                                        class="ri-eye-line mr-0"></i></a>
-                                                <a class="badge bg-success mr-2" data-toggle="tooltip" data-placement="top"
-                                                    title="" data-original-title="Edit"
-                                                    href="{{ route('products.edit', $product) }}"><i
-                                                        class="ri-pencil-line mr-0"></i></a>
-                                                <a class="badge bg-warning mr-2" data-toggle="tooltip" data-placement="top"
-                                                    title="" data-original-title="Delete"
-                                                    href="{{ route('products.destroy', $product) }}"><i
-                                                        class="ri-delete-bin-line mr-0"></i></a>
+                                                <a data-toggle="tooltip" data-placement="top" title=""
+                                                    data-original-title="Edit"
+                                                    href="{{ route('products.edit', $product['id']) }}"><button
+                                                        type="submit" class="badge bg-success mr-2"><i
+                                                            class="ri-pencil-line mr-0"></i></button></a>
+                                                <a data-toggle="tooltip" data-placement="top" title=""
+                                                    data-original-title="Delete"
+                                                    href="{{ route('products.destroy', $product['id']) }}"><button
+                                                        type="submit" class="badge bg-danger mr-2"><i
+                                                            class="ri-delete-bin-line mr-0"></i></button></a>
                                             </div>
                                         </td>
                                     </tr>
