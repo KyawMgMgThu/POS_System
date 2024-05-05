@@ -44,14 +44,12 @@
                     </a>
                     <ul id="product" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                         <li class="">
-                            <a href="{{ route('products.index') }}"
-                                class="{{ route('products.index') ? 'text-white bg-primary rounded' : ' ' }}">
+                            <a href="{{ route('products.index') }}" class="">
                                 <i class="las la-minus"></i><span>{{ __('List Product') }}</span>
                             </a>
                         </li>
                         <li class="">
-                            <a href="{{ route('products.create') }}"
-                                class="{{ route('products.create') ? 'text-white bg-primary rounded' : ' ' }}">
+                            <a href="{{ route('products.create') }}" class="">
                                 <i
                                     class="las
                                 la-minus"></i><span>{{ __('Add Product') }}</span>

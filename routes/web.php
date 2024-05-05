@@ -27,4 +27,5 @@ Auth::routes();
 Route::prefix('admin')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::resource('products', ProductController::class);
+    Route::get('product/delete/{id}', [ProductController::class, 'destroy'])->name('product#delete');
 });

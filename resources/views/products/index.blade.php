@@ -67,7 +67,7 @@
                                                             class="ri-pencil-line mr-0"></i></button></a>
                                                 <a data-toggle="tooltip" data-placement="top" title=""
                                                     data-original-title="Delete"
-                                                    href="{{ route('products.destroy', $product['id']) }}"><button
+                                                    href="{{ route('product#delete', $product['id']) }}"><button
                                                         type="submit" class="badge bg-danger mr-2"><i
                                                             class="ri-delete-bin-line mr-0"></i></button></a>
                                             </div>

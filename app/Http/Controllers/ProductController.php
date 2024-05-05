@@ -35,9 +35,12 @@ class ProductController extends Controller
     public function store(ProductStoreRequest $request)
     {
         //
+
         $image_path = '';
         if ($request->hasFile('image')) {
-            $image_path = $request->file('image')->store('products');
+            $fileName = time() . $request->file('image')->getClientOriginalName();
+            $image_path = $request->file('image')->storeAs('products', $fileName, 'public');
+            $requestData['image'] = '/storage/' . $image_path;
         }
         $product = ModelsProduct::create([
             'name' => $request->name,
@@ -91,7 +94,12 @@ class ProductController extends Controller
     public function destroy($id)
     {
         //
-        dd("Delete");
+        $product = ModelsProduct::find($id);
+        if ($product->image) {
+            Storage::delete($product->image);
+        }
+        $product->delete();
+        return back();
     }
 
     private function getProductData($request)
