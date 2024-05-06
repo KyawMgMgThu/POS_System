@@ -136,9 +136,11 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>Quantity *</label>
-                                            <input type="text" class="form-control" placeholder="Enter Quantity">
-                                            @error('name')
+                                            <label>Quantity</label>
+                                            <input type="text" name="quantity" class="form-control"
+                                                placeholder="Enter Quantity"
+                                                value="{{ old('quantity', $product['quantity']) }}">
+                                            @error('quantity')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -186,4 +188,12 @@
             <!-- Page end  -->
         </div>
     </div>
+@endsection
+@section('js')
+    <script src="{{ asset('plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            bsCustomFileInput.init();
+        });
+    </script>
 @endsection

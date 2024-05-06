@@ -49,6 +49,7 @@
 
     <!-- app JavaScript -->
     <script src="../../../assets/js/app.js"></script>
+    @yield('js')
 </body>
 
 </html>

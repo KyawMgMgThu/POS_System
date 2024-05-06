@@ -197,12 +197,12 @@
                     </a>
                     <ul id="people" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                         <li class="">
-                            <a href="../backend/page-list-customers.html">
+                            <a href="{{ route('customers.index') }}">
                                 <i class="las la-minus"></i><span>Customers</span>
                             </a>
                         </li>
                         <li class="">
-                            <a href="../backend/page-add-customers.html">
+                            <a href="{{ route('customers.create') }}">
                                 <i class="las la-minus"></i><span>Add Customers</span>
                             </a>
                         </li>

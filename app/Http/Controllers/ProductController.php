@@ -34,7 +34,6 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request)
     {
-        //
 
         $image_path = '';
         if ($request->hasFile('image')) {
@@ -48,6 +47,7 @@ class ProductController extends Controller
             'image' => $image_path,
             'barcode' => $request->barcode,
             'price' => $request->price,
+            'quantity' => $request->quantity,
             'status' => $request->status
         ]);
         if (!$product) {
@@ -71,6 +71,10 @@ class ProductController extends Controller
     {
         //
         $product = ModelsProduct::where('id', $id)->first()->toArray();
+        // Delete old image
+        if ($product['image']) {
+            Storage::delete($product['image']);
+        }
         return view('products.edit', compact('product'));
     }
 
@@ -80,7 +84,6 @@ class ProductController extends Controller
     public function update(Request $request)
     {
         //
-
         $this->postValidationCheck($request);
         $updateData = $this->getProductData($request);
         $id = $request->id;
@@ -106,14 +109,9 @@ class ProductController extends Controller
     {
         $image_path = '';
         if ($request->hasFile('image')) {
-            // Delete old image
-            if ($request->image) {
-                Storage::delete($request->image);
-            }
-            // Store image
-            $image_path = $request->file('image')->store('products', 'public');
-            // Save to Database
-            $request->image = $image_path;
+            $fileName = time() . $request->file('image')->getClientOriginalName();
+            $image_path = $request->file('image')->storeAs('products', $fileName, 'public');
+            $requestData['image'] = '/storage/' . $image_path;
         }
 
 
@@ -125,6 +123,7 @@ class ProductController extends Controller
             'image' => $image_path,
             'barcode' => $request->barcode,
             'price' => $request->price,
+            'quantity' => $request->quantity,
             'status' => $request->status
         ];
     }
@@ -138,6 +137,7 @@ class ProductController extends Controller
             'barcode' => 'required|string|max:50|unique:products,barcode' . $request->id,
             'price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
             'status' => 'required|boolean',
+            'quantity' => 'required|integer',
         ];
     }
 }

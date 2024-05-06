@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('navtitle', 'Product List')
+@section('navtitle', 'Customer List')
 @section('content')
     <div class="content-page">
         <div class="container-fluid">
@@ -7,11 +7,11 @@
                 <div class="col-lg-12">
                     <div class="d-flex flex-wrap flex-wrap align-items-center justify-content-between mb-4">
                         <div>
-                            <h4 class="mb-3">{{ __('Product List') }}</h4>
+                            <h4 class="mb-3">{{ __('Customer List') }}</h4>
                         </div>
-                        <a href="{{ route('products.create') }}" class="btn btn-primary add-list"><i
+                        <a href="{{ route('customers.create') }}" class="btn btn-primary add-list"><i
                                 class="las la-plus mr-3"></i>Add
-                            Product</a>
+                            Customer</a>
                     </div>
                 </div>
 
@@ -23,56 +23,40 @@
                                     <th>
                                         ID
                                     </th>
-                                    <th>Product</th>
-                                    <th>Code</th>
-                                    <th>Category</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Status</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Phone No.</th>
+                                    <th>Address</th>
                                     <th>Created at</th>
                                     <th>Updated at</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody class="ligth-body">
-                                @foreach ($products as $product)
+                                @foreach ($customers as $customer)
                                     <tr>
                                         <td>
-                                            {{ $product->id }}
+                                            {{ $customer->id }}
                                         </td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <img src="{{ Storage::url($product->image) }}"
-                                                    class="img-fluid rounded avatar-50 mr-3" alt="">
-                                                <div>
-                                                    {{ $product->name }}
-                                                    <p class="mb-0"><small>{{ $product->description }}</small></p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>{{ $product->barcode }}</td>
+                                        <td>{{ $product->first_name }}</td>
+                                        <td>{{ $product->Last_name }}</td>
+                                        <td>{{ $product->email }}</td>
                                         <td>Beauty</td>
-                                        <td>{{ $product->price }}</td>
-                                        <td>{{ $product->quantity }}</td>
-
-                                        <td>
-                                            <div class="badge badge-{{ $product->status ? 'success' : 'danger' }}">
-                                                {{ $product->status ? 'Active' : 'Inactive' }}
-                                            </div>
-
-                                        </td>
+                                        <td>{{ $product->phone }}</td>
+                                        <td>{{ $product->address }}</td>
                                         <td>{{ $product->created_at }}</td>
                                         <td>{{ $product->updated_at }}</td>
                                         <td>
                                             <div class="d-flex align-items-center list-action">
                                                 <a data-toggle="tooltip" data-placement="top" title=""
                                                     data-original-title="Edit"
-                                                    href="{{ route('products.edit', $product['id']) }}"><button
+                                                    href="{{ route('customers.edit', $customer['id']) }}"><button
                                                         type="submit" class="badge bg-success mr-2"><i
                                                             class="ri-pencil-line mr-0"></i></button></a>
                                                 <a data-toggle="tooltip" data-placement="top" title=""
                                                     data-original-title="Delete"
-                                                    href="{{ route('product#delete', $product['id']) }}"><button
+                                                    href="{{ route('customer#delete', $customer['id']) }}"><button
                                                         type="submit" class="badge bg-danger mr-2 btn-delete"><i
                                                             class="ri-delete-bin-line mr-0"></i></button></a>
                                             </div>
@@ -82,7 +66,7 @@
 
                             </tbody>
                         </table>
-                        {{ $products->links() }}
+                        {{ $customers->links() }}
                     </div>
                 </div>
             </div>
