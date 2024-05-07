@@ -30,22 +30,14 @@ class CustomerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CustomerStoreRequest $request)
+    public function store(Request $request)
     {
         //
-        dd($request);
-        $customer = ModelsCustomer::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'address' => $request->address,
-            'user_id' => $request->user()->id
-        ]);
-        if (!$customer) {
-            return redirect()->back()->with('error', 'Failed to create customer');
-        }
-        return redirect()->route('customers.index')->with('success', 'Customer created successfully');
+
+        $this->CustomerValidation($request);
+        $data = $this->getCustomerData($request);
+        ModelsCustomer::create($data);
+        return redirect()->route('customers.index')->with('success', __('customer.succes_creating'));
     }
 
     /**
@@ -59,24 +51,59 @@ class CustomerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ModelsCustomer $modelsCustomer)
+    public function edit($id)
     {
         //
+        $customer = ModelsCustomer::where('id', $id)->first()->toArray();
+        return view('customers.edit', compact('customer'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ModelsCustomer $modelsCustomer)
+    public function update(Request $request)
     {
         //
+        $this->CustomerValidation($request);
+        $updateData = $this->getCustomerData($request);
+        $id = $request->id;
+        ModelsCustomer::where('id', $id)->update($updateData);
+
+        return redirect()->route('customers.index')->with('success', __('customer.success_updating'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ModelsCustomer $modelsCustomer)
+    public function destroy($id)
     {
         //
+        ModelsCustomer::find($id)->delete();
+
+
+        return back();
+    }
+
+    private function getCustomerData($request)
+    {
+        return [
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'user_id' => $request->user()->id,
+        ];
+    }
+
+    private function CustomerValidation($request)
+    {
+        $CustomerValidation = [
+            'first_name' => 'required|string|max:20',
+            'last_name' => 'required|string|max:20',
+            'email' => 'nullable|email',
+            'phone' => 'nullable|string|max:20',
+            'address' => 'nullable|string'
+        ];
     }
 }

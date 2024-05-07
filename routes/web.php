@@ -22,4 +22,5 @@ Route::prefix('admin')->group(function () {
     Route::resource('products', ProductController::class);
     Route::get('product/delete/{id}', [ProductController::class, 'destroy'])->name('product#delete');
     Route::resource('customers', CustomerController::class);
+    Route::get('customers/delete/{id}', [CustomerController::class, 'destroy'])->name('customers#delete');
 });

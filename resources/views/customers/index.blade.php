@@ -39,14 +39,13 @@
                                         <td>
                                             {{ $customer->id }}
                                         </td>
-                                        <td>{{ $product->first_name }}</td>
-                                        <td>{{ $product->Last_name }}</td>
-                                        <td>{{ $product->email }}</td>
-                                        <td>Beauty</td>
-                                        <td>{{ $product->phone }}</td>
-                                        <td>{{ $product->address }}</td>
-                                        <td>{{ $product->created_at }}</td>
-                                        <td>{{ $product->updated_at }}</td>
+                                        <td>{{ $customer->first_name }}</td>
+                                        <td>{{ $customer->last_name }}</td>
+                                        <td>{{ $customer->email }}</td>
+                                        <td>{{ $customer->phone }}</td>
+                                        <td>{{ $customer->address }}</td>
+                                        <td>{{ $customer->created_at }}</td>
+                                        <td>{{ $customer->updated_at }}</td>
                                         <td>
                                             <div class="d-flex align-items-center list-action">
                                                 <a data-toggle="tooltip" data-placement="top" title=""
@@ -56,7 +55,7 @@
                                                             class="ri-pencil-line mr-0"></i></button></a>
                                                 <a data-toggle="tooltip" data-placement="top" title=""
                                                     data-original-title="Delete"
-                                                    href="{{ route('customer#delete', $customer['id']) }}"><button
+                                                    href="{{ route('customers#delete', $customer['id']) }}"><button
                                                         type="submit" class="badge bg-danger mr-2 btn-delete"><i
                                                             class="ri-delete-bin-line mr-0"></i></button></a>
                                             </div>
@@ -111,7 +110,7 @@
     </div>
 @endsection
 @section('js')
-    <script src=" {{ asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+    <script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <script type="module">
         $(document).ready(function() {
             $(document).on('click', '.btn-delete', function() {
@@ -125,12 +124,12 @@
                 })
 
                 swalWithBootstrapButtons.fire({
-                    title: {{ __('product.sure') }},
-                    text: {{ __('product.really_delete') }},
-                    icon: {{ __('product.Create_Product') }} 'warning',
+                    title: {{ __('customer.sure') }},
+                    text: {{ __('customer.really_delete') }},
+                    icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: {{ __('product.yes_delete') }},
-                    cancelButtonText: {{ __('product.No') }},
+                    confirmButtonText: {{ __('customer.yes_delete') }},
+                    cancelButtonText: {{ __('customer.No') }},
                     reverseButtons: true
                 }).then((result) => {
                     if (result.value) {
