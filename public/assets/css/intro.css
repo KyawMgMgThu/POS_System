@@ -7627,6 +7627,29 @@ ul.iq-edit-profile li a {
 
 .custom-control-input:focus ~ .custom-control-label:before {
   box-shadow: none !important; }
+.user-cart{
+    .qty{
+        width: 45px;
+        float: left;
+    }
+}
+.order-product{
+    .item{
+        float: left;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        background: #fff;
+        img{
+            width: 100px;
+            height: 100px;
+            max-width: 100;
+        }
+        h5{
+            text-align: center;
+            font-size: 13px;
+        }
+    }
+}
 
 g[aria-describedby="id-22-description"] {
   stroke: none; }

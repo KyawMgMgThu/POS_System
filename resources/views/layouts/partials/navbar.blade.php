@@ -32,9 +32,16 @@
 
                         </li>
                         <li>
-                            <a href="#" class="btn border add-btn shadow-none mx-2 d-none d-md-block"
-                                data-toggle="modal" data-target="#new-order"><i class="las la-plus mr-2"></i>New
-                                Order</a>
+                            <a href="{{ route('cart.index') }}" class="btn border add-btn mx-2 d-none d-md-block"> <svg
+                                    class="svg-icon mr-2" id="p-dash2" width="20" height="20"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <circle cx="9" cy="21" r="1"></circle>
+                                    <circle cx="20" cy="21" r="1"></circle>
+                                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                                </svg>OPEN
+                                POS</a>
                         </li>
                         <li class="nav-item nav-icon search-content">
                             <a href="#" class="search-toggle rounded" id="dropdownSearch" data-toggle="dropdown"
@@ -49,86 +56,6 @@
                                         <a href="#" class="search-link"><i class="las la-search"></i></a>
                                     </div>
                                 </form>
-                            </div>
-                        </li>
-                        <li class="nav-item nav-icon dropdown">
-                            <a href="#" class="search-toggle dropdown-toggle" id="dropdownMenuButton2"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail">
-                                    <path
-                                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
-                                    </path>
-                                    <polyline points="22,6 12,13 2,6"></polyline>
-                                </svg>
-                                <span class="bg-primary"></span>
-                            </a>
-                            <div class="iq-sub-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                                <div class="card shadow-none m-0">
-                                    <div class="card-body p-0 ">
-                                        <div class="cust-title p-3">
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <h5 class="mb-0">All Messages</h5>
-                                                <a class="badge badge-primary badge-card" href="#">3</a>
-                                            </div>
-                                        </div>
-                                        <div class="px-3 pt-0 pb-0 sub-card">
-                                            <a href="#" class="iq-sub-card">
-                                                <div class="media align-items-center cust-card py-3 border-bottom">
-                                                    <div class="">
-                                                        <img class="avatar-50 rounded-small"
-                                                            src="../../../assets/images/user/01.jpg" alt="01">
-                                                    </div>
-                                                    <div class="media-body ml-3">
-                                                        <div class="d-flex align-items-center justify-content-between">
-                                                            <h6 class="mb-0">Emma Watson</h6>
-                                                            <small class="text-dark"><b>12 : 47 pm</b></small>
-                                                        </div>
-                                                        <small class="mb-0">Lorem ipsum dolor sit
-                                                            amet</small>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="iq-sub-card">
-                                                <div class="media align-items-center cust-card py-3 border-bottom">
-                                                    <div class="">
-                                                        <img class="avatar-50 rounded-small"
-                                                            src="../../../assets/images/user/02.jpg" alt="02">
-                                                    </div>
-                                                    <div class="media-body ml-3">
-                                                        <div class="d-flex align-items-center justify-content-between">
-                                                            <h6 class="mb-0">Ashlynn Franci</h6>
-                                                            <small class="text-dark"><b>11 : 30 pm</b></small>
-                                                        </div>
-                                                        <small class="mb-0">Lorem ipsum dolor sit
-                                                            amet</small>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="iq-sub-card">
-                                                <div class="media align-items-center cust-card py-3">
-                                                    <div class="">
-                                                        <img class="avatar-50 rounded-small"
-                                                            src="../../../assets/images/user/03.jpg" alt="03">
-                                                    </div>
-                                                    <div class="media-body ml-3">
-                                                        <div class="d-flex align-items-center justify-content-between">
-                                                            <h6 class="mb-0">Kianna Carder</h6>
-                                                            <small class="text-dark"><b>11 : 21 pm</b></small>
-                                                        </div>
-                                                        <small class="mb-0">Lorem ipsum dolor sit
-                                                            amet</small>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <a class="right-ic btn btn-primary btn-block position-relative p-2"
-                                            href="#" role="button">
-                                            View All
-                                        </a>
-                                    </div>
-                                </div>
                             </div>
                         </li>
                         <li class="nav-item nav-icon dropdown">
