@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('barcode')->unique();
             $table->decimal('price', 8, 2);
             $table->boolean('status')->default(true);
+            $table->integer('alert_stock')->default('100');
             $table->timestamps();
         });
     }

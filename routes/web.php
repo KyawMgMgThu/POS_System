@@ -7,9 +7,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\CustomerController;
-
-
-
+use App\Http\Controllers\SuppliersController;
+use App\Http\Controllers\TransactionsController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,6 +28,10 @@ Route::prefix('admin')->group(function () {
 
     Route::resource('products', ProductController::class);
     Route::resource('customers', CustomerController::class);
+    Route::resource('/cart', CartController::class);
+    Route::resource('/suppliers', SuppliersController::class);
+    Route::resource('/transactions', TransactionsController::class);
+    Route::resource('/cart', CartController::class);
 });
 
 Auth::routes();

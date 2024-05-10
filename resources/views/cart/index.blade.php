@@ -27,11 +27,16 @@
                                             <th>Product Name</th>
                                             <th>Quantity</th>
                                             <th class="text-right">Price</th>
+                                            <th>Discount</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>Apple</td>
+                                            <td><select name="product_id" id="product_id" class="form-control product_id">
+                                                    @foreach ($products as $product)
+                                                        <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                                    @endforeach
+                                                </select></td>
                                             <td><input type="text" class="form-control form-control-sm qty count"
                                                     value="1"><button type="submit"
                                                     class="btn btn-sm bg-danger ml-1"><i
