@@ -32,27 +32,13 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ProductStoreRequest $request)
+    public function store(Request $request)
     {
+        $this->productValidationCheck($request);
 
-        $image_path = '';
-        if ($request->hasFile('image')) {
-            $fileName = time() . $request->file('image')->getClientOriginalName();
-            $image_path = $request->file('image')->storeAs('products', $fileName, 'public');
-            $requestData['image'] = '/storage/' . $image_path;
-        }
-        $product = ModelsProduct::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'image' => $image_path,
-            'barcode' => $request->barcode,
-            'price' => $request->price,
-            'quantity' => $request->quantity,
-            'status' => $request->status
-        ]);
-        if (!$product) {
-            return redirect()->back()->with('error', 'Failed to create product');
-        }
+
+        $data = $this->getProductData($request);
+        ModelsProduct::create($data);
         return redirect()->route('products.index')->with('success', 'Product created successfully');
     }
 
@@ -125,6 +111,19 @@ class ProductController extends Controller
             'price' => $request->price,
             'quantity' => $request->quantity,
             'status' => $request->status
+        ];
+    }
+
+    private function productValidationCheck($request)
+    {
+        $validationRule = [
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image',
+            'barcode' => 'required|string|max:50|unique:products,barcode',
+            'price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
+            'status' => 'required|boolean',
+            'quantity' => 'required|integer',
         ];
     }
     private function postValidationCheck($request)

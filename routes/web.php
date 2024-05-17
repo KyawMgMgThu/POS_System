@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CartDetailController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -23,14 +24,12 @@ Route::prefix('admin')->group(function () {
     Route::get('/product/delete/{id}', [ProductController::class, 'destroy'])->name('product#delete');
     Route::get('/customers/delete/{id}', [CustomerController::class, 'destroy'])->name('customers#delete');
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
-    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/settings/store', [SettingController::class, 'store'])->name('settings.store');
+    Route::post('/cart/store', [CartController::class, 'store'])->name('cart.store');
+
 
     Route::resource('products', ProductController::class);
     Route::resource('customers', CustomerController::class);
-    Route::resource('/cart', CartController::class);
-    Route::resource('/suppliers', SuppliersController::class);
-    Route::resource('/transactions', TransactionsController::class);
     Route::resource('/cart', CartController::class);
 });
 

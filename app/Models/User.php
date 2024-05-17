@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Http\Controllers\ProductController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -22,6 +24,12 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+
+    public function cart()
+    {
+        return $this->belongsToMany(ModelsProduct::class, 'models__user_cart', 'user_id', 'product_id')
+            ->withPivot('quantity');
+    }
 
     /**
      * The attributes that should be hidden for serialization.

@@ -3,10 +3,8 @@
 @section('content')
     <div class="content-page">
         <div class="container-fluid add-form-list">
-
             <div class="row">
                 <div class="col-sm-12">
-
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">
                             <div class="header-title">
@@ -37,7 +35,6 @@
                                             <input type="text"
                                                 class="form-control @error('barcode')
                                             is-invalid
-
                                         @enderror"
                                                 placeholder="Enter Barcode" name="barcode"
                                                 data-errors="Please Enter Barcode" value="{{ old('barcode') }}">
@@ -52,9 +49,8 @@
                                         <div class="form-group">
                                             <label for="category">Category</label>
                                             <select name="category"
-                                                class="form-control @error('category')
+                                                class="@error('category')
                                             is-invalid
-
                                         @enderror form-control"
                                                 data-style="py-0">
                                                 <option>Beauty</option>
@@ -78,7 +74,6 @@
                                             <input type="text"
                                                 class="form-control @error('cost')
                                         is-invalid
-
                                         @enderror"
                                                 value="{{ old('cost') }}" name="cost" placeholder="Enter Cost"
                                                 data-errors="Please Enter Cost">
@@ -95,7 +90,6 @@
                                             <input type="text" name="price"
                                                 class="form-control @error('price')
                                         is-invalid
-
                                         @enderror"
                                                 value="{{ old('price') }}" placeholder="Enter Price"
                                                 data-errors="Please Enter Price">
@@ -113,7 +107,6 @@
                                             <select name="status" id="status"
                                                 class="form-control @error('status')
                                         is-invalid
-
                                         @enderror"
                                                 data-style="py-0">
                                                 <option value="1" {{ old('status') == 1 ? 'selected' : '' }}>Active
@@ -130,10 +123,10 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>Quantity</label>
+                                            <label for="quantity">Quantity</label>
                                             <input type="text" name="quantity" class="form-control"
                                                 placeholder="Enter Quantity">
-                                            @error('name')
+                                            @error('quantity')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -146,7 +139,6 @@
                                             <input type="file"
                                                 class="form-control @error('image')
                                         is-invalid
-
                                         @enderror image-file"
                                                 name="image" accept="image/*" value="{{ old('image') }}">
                                             @error('image')
