@@ -11,21 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('models_suppliers', function (Blueprint $table) {
+        Schema::create('models_orders', function (Blueprint $table) {
             $table->id();
-            $table->string('supplier_name');
-            $table->text('address');
-            $table->string('phone');
-            $table->string('email');
+            $table->foreignId('customer_id')->nullable();
+            $table->foreignId('user_id');
             $table->timestamps();
+
+            $table->foreign('customer_id')->references('id')->on('models_customers')->onDelete('set null');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
+
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('models_suppliers');
+        Schema::dropIfExists('models_orders');
     }
 };

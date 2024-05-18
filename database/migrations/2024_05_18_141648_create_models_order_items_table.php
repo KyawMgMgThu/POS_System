@@ -11,12 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('models__user_cart', function (Blueprint $table) {
-            $table->foreignId('user_id');
+        Schema::create('models_order_items', function (Blueprint $table) {
+            $table->id();
+            $table->decimal('price', 10, 4);
+            $table->integer('quantity')->default(1);
+            $table->foreignId('order_id');
             $table->foreignId('product_id');
-            $table->unsignedInteger('quantity');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('order_id')->references('id')->on('models_orders')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('models_products')->onDelete('cascade');
+
+
+            $table->timestamps();
         });
     }
 
@@ -25,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('models__user_cart');
+        Schema::dropIfExists('models_order_items');
     }
 };

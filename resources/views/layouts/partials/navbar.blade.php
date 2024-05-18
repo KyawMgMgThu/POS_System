@@ -3,19 +3,17 @@
         <nav class="navbar navbar-expand-lg navbar-light p-0">
             <div class="iq-navbar-logo d-flex align-items-center justify-content-between">
                 <i class="ri-menu-line wrapper-menu"></i>
-                <a href="../backend/index.html" class="header-logo">
-                    <img src="../../../assets/images/logo.png" class="img-fluid rounded-normal" alt="logo">
+                <a href="{{ route('home') }}" class="">
+                    <img src="../../../assets/images/logo.png" class="img-fluid rounded-normal" width="50"
+                        height="50" alt="logo">
                     <h5 class="logo-title ml-3">@yield('title', config('app.name'))</h5>
 
                 </a>
             </div>
-            <div class="iq-search-bar device-search">
-                <form action="#" class="searchbox">
-                    <a class="search-link" href="#"><i class="ri-search-line"></i></a>
-                    <input type="text" class="text search-input" placeholder="Search here...">
-                </form>
+            <div class="">
+
             </div>
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-end">
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-label="Toggle navigation">
@@ -23,14 +21,6 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto navbar-list align-items-center">
-                        <li class="nav-item nav-icon dropdown">
-                            <a href="#" class="search-toggle dropdown-toggle btn border add-btn"
-                                id="dropdownMenuButton02" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
-                                Myanmar
-                            </a>
-
-                        </li>
                         <li>
                             <a href="{{ route('cart.index') }}" class="btn border add-btn mx-2 d-none d-md-block"> <svg
                                     class="svg-icon mr-2" id="p-dash2" width="20" height="20"
@@ -42,21 +32,6 @@
                                     <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
                                 </svg>OPEN
                                 POS</a>
-                        </li>
-                        <li class="nav-item nav-icon search-content">
-                            <a href="#" class="search-toggle rounded" id="dropdownSearch" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <i class="ri-search-line"></i>
-                            </a>
-                            <div class="iq-search-bar iq-sub-dropdown dropdown-menu" aria-labelledby="dropdownSearch">
-                                <form action="#" class="searchbox p-2">
-                                    <div class="form-group mb-0 position-relative">
-                                        <input type="text" class="text search-input font-size-12"
-                                            placeholder="type here to search...">
-                                        <a href="#" class="search-link"><i class="las la-search"></i></a>
-                                    </div>
-                                </form>
-                            </div>
                         </li>
                         <li class="nav-item nav-icon dropdown">
                             <a href="#" class="search-toggle dropdown-toggle" id="dropdownMenuButton"
@@ -103,8 +78,7 @@
                         <li class="nav-item nav-icon dropdown caption-content">
                             <a href="#" class="search-toggle dropdown-toggle" id="dropdownMenuButton4"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="../../../assets/images/user/1.png" class="img-fluid rounded"
-                                    alt="user">
+                                <img src="../../../assets/images/user/1.png" class="img-fluid rounded" alt="user">
                             </a>
                             <div class="iq-sub-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <div class="card shadow-none m-0">

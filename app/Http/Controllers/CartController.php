@@ -25,17 +25,53 @@ class CartController extends Controller
         ]);
 
         $barcode = $request->input('barcode');
-        $product = ModelsProduct::where('barcode', $barcode)->first();
 
-        if ($product) {
-            $cartItem = $request->user()->cart()->where('product_id', $product->id)->first();
-            if ($cartItem) {
-                $request->user()->cart()->updateExistingPivot($product->id, ['quantity' => $cartItem->pivot->quantity + 1]);
-            } else {
-                $request->user()->cart()->attach($product->id, ['quantity' => 1]);
-            }
+        $cartItem = $request->user()->cart()->where('barcode', $barcode)->first();
+        if ($cartItem) {
+            $cartItem->pivot->quantity = $cartItem->pivot->quantity + 1;
+            $cartItem->pivot->save();
+        } else {
+            $product = ModelsProduct::where('barcode', $barcode)->first();
+            $request->user()->cart()->attach($product->id, [
+                'quantity' => 1
+            ]);
         }
 
+        return response('', 204);
+    }
+
+    public function changeQuantity(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required|exists:models_products,id',
+            'quantity' => 'required|integer|min:1'
+        ]);
+        $cart = $request->user()->cart()->where('id', $request->product_id)->first();
+        if ($cart) {
+            $cart->pivot->quantity = $request->quantity;
+            $cart->pivot->save();
+        }
+        return response()->json([
+            'success' => true
+        ]);
+    }
+    public function destroy(Request $request, $id)
+    {
+        // Assuming you want to delete a cart item by its ID
+        $cartItem = $request->user()->cart()->where('id', $id)->first();
+        if ($cartItem) {
+            $cartItem->pivot->delete();
+        } else {
+            // Handle case where the cart item with the given ID doesn't exist
+            return response()->json(['error' => 'Cart item not found'], 404);
+        }
+
+        return response()->json(['message' => 'Cart item deleted successfully'], 200);
+    }
+
+    public function empty(Request $request)
+    {
+        $request->user()->cart()->detach();
         return response('', 204);
     }
 }

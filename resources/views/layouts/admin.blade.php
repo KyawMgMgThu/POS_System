@@ -9,7 +9,7 @@
 
     <!-- Favicon -->
     <link rel="stylesheet" href="../../../assets/css/intro.css">
-    <link rel="shortcut icon" href="../../../assets/images/favicon.ico" />
+    <link rel="shortcut icon" href="../../../assets/images/logo.png" />
     <link rel="stylesheet" href="../../../assets/css/backend-plugin.min.css">
     <link rel="stylesheet" href="../../../assets/css/backend.css?v=1.0.0">
     <link rel="stylesheet" href="../../../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
@@ -52,7 +52,13 @@
 
     <!-- app JavaScript -->
     <script src="../../../assets/js/app.js"></script>
+
     @yield('js')
 </body>
+<script>
+    window.APP = <?php echo json_encode([
+        'currency' => config('settings.currency_symbol'),
+    ]); ?>
+</script>
 
 </html>

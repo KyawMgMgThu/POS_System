@@ -11,9 +11,14 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        if ($request->wantsJson()) {
+            return response(
+                ModelsCustomer::all(),
+            );
+        }
         $customers = ModelsCustomer::latest()->paginate(5);
         return view('customers.index', compact('customers'));
     }

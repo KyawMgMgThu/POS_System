@@ -25,13 +25,19 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         // 'key' => 'value';
-        /*  $settings = ModelsSetting::all('key', 'value')->keyBy('key')->transform(function ($setting) {
-            return $setting->value;
-        })->toArray();
-        config([
-            'settings' => $settings
-        ]);
-        config(['app.name' => config('settings.app_name')]); */
+        if (!$this->app->runningInConsole()) {
+            // 'key' => 'value'
+            $settings = ModelsSetting::all('key', 'value')
+                ->keyBy('key')
+                ->transform(function ($setting) {
+                    return $setting->value;
+                })
+                ->toArray();
+            config([
+                'settings' => $settings
+            ]);
+            config(['app.name' => config('settings.app_name')]);
+        }
         Relation::morphMap([
             'user_cart' => 'App\Models\ModelsProduct',
         ]);

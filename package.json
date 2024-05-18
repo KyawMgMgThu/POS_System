@@ -16,5 +16,9 @@
         "react-dom": "^18.2.0",
         "sass": "^1.56.1",
         "vite": "^5.2.11"
+    },
+    "dependencies": {
+        "lodash": "^4.17.21",
+        "sweetalert2": "^11.11.0"
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\ModelsProduct;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ProductStoreRequest;
+use App\Http\Resources\ProductResource;
 use Illuminate\Database\Events\ModelsPruned;
 
 class ProductController extends Controller
@@ -13,12 +14,23 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        $products = ModelsProduct::latest()->paginate(5);
+        $query = ModelsProduct::query();
+
+        if ($request->search) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        $products = $query->latest()->paginate(5);
+
+        if ($request->wantsJson()) {
+            return ProductResource::collection($products);
+        }
+
         return view('products.index', compact('products'));
     }
+
 
     /**
      * Show the form for creating a new resource.

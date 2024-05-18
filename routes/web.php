@@ -26,11 +26,12 @@ Route::prefix('admin')->group(function () {
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
     Route::post('/settings/store', [SettingController::class, 'store'])->name('settings.store');
     Route::post('/cart/store', [CartController::class, 'store'])->name('cart.store');
-
+    Route::post('/cart/changeQuantity', [CartController::class, 'changeQuantity'])->name('cart.changeQuantity');
+    Route::delete('/cart/empty', [CartController::class, 'empty'])->name('cart.empty');
 
     Route::resource('products', ProductController::class);
     Route::resource('customers', CustomerController::class);
-    Route::resource('/cart', CartController::class);
+    Route::resource('cart', CartController::class);
 });
 
 Auth::routes();

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { createRoot } from 'react-dom/client';
 import axios from 'axios';
-
+import Swal from 'sweetalert2';
+import { sum, debounce } from 'lodash';
 import './Cart';
 
 class Cart extends Component {
@@ -10,14 +11,64 @@ class Cart extends Component {
         this.state = {
             cart: [],
             barcode: '',
+            paidAmount: '',
+            balance: '',
+            products: [],
+            customers: [],
+            search: '',
+            customer_id: ''
         };
         this.loadCart = this.loadCart.bind(this);
+        this.loadProducts = this.loadProducts.bind(this);
         this.handleOnChangeBarcode = this.handleOnChangeBarcode.bind(this);
         this.handleScanBarcode = this.handleScanBarcode.bind(this);
+        this.handlePaidAmountChange = this.handlePaidAmountChange.bind(this);
+        this.handleOnChangeQuantity = this.handleOnChangeQuantity.bind(this);
+        this.handleClickDelete = this.handleClickDelete.bind(this);
+        this.handleEmptyCart = this.handleEmptyCart.bind(this);
+        this.handleSearchProduct = this.handleSearchProduct.bind(this);
+        this.handleSearch = debounce(this.handleSearch.bind(this), 300);
+        this.handleAddToCart = this.handleAddToCart.bind(this);
+        this.setCustomerId = this.setCustomerId.bind(this);
     }
 
     componentDidMount() {
         this.loadCart();
+        this.loadProducts();
+        this.loadCustomers();
+    }
+
+    loadCustomers(){
+        axios.get('/admin/customers')
+            .then((res) => {
+                const customers = res.data;
+                this.setState({ customers });
+            })
+            .catch(error => {
+                console.error(error);
+                Swal.fire(
+                    'Error',
+                    'Failed to load products',
+                    'error'
+                );
+            });
+    }
+
+    loadProducts(search = '') {
+        const query = search ? `?search=${search}` : '';
+        axios.get(`/admin/products${query}`)
+            .then((res) => {
+                const products = res.data.data;
+                this.setState({ products });
+            })
+            .catch(error => {
+                console.error(error);
+                Swal.fire(
+                    'Error',
+                    'Failed to load products',
+                    'error'
+                );
+            });
     }
 
     handleOnChangeBarcode(event) {
@@ -26,34 +77,142 @@ class Cart extends Component {
     }
 
     loadCart() {
-        axios.get("/admin/cart").then((res) => {
-            const cart = res.data;
-            this.setState({ cart });
-        });
+        axios.get("/admin/cart")
+            .then((res) => {
+                const cart = res.data;
+                this.setState({ cart }, this.updateBalance);
+            })
+            .catch(error => {
+                console.error(error);
+                Swal.fire(
+                    'Error',
+                    'Failed to load cart',
+                    'error'
+                );
+            });
     }
 
     handleScanBarcode(event) {
         event.preventDefault();
         const { barcode } = this.state;
         if (barcode) {
-            axios.post('/admin/cart/store', { barcode }).then(res => {
-                this.loadCart();
-                this.setState({ barcode: '' });
-            }).catch(error => {
-                console.error("There was an error adding the product to the cart!", error);
-            });
+            this.handleAddToCart(barcode);
         }
     }
 
+    handlePaidAmountChange(event) {
+        const paidAmount = event.target.value;
+        this.setState({ paidAmount }, this.updateBalance);
+    }
+
+    handleOnChangeQuantity(product_id, quantity) {
+        const cart = this.state.cart.map(c => {
+            if (c.id === product_id) {
+                return {
+                    ...c,
+                    pivot: {
+                        ...c.pivot,
+                        quantity: Number(quantity)
+                    }
+                };
+            }
+            return c;
+        });
+        this.setState({ cart }, this.updateBalance);
+        axios.post('/admin/cart/changeQuantity', { product_id, quantity })
+            .then(res => {})
+            .catch(error => {
+                Swal.fire(
+                    'Error',
+                    error.response.data.message,
+                    'error'
+                );
+                this.loadCart();
+            });
+    }
+
+    getTotal(cart) {
+        return sum(cart.map(c => c.price * c.pivot.quantity)).toFixed(2);
+    }
+
+    updateBalance() {
+        const total = parseFloat(this.getTotal(this.state.cart));
+        const paidAmount = parseFloat(this.state.paidAmount) || 0;
+        const balance = (paidAmount - total).toFixed(2);
+        this.setState({ balance });
+    }
+
+    handleClickDelete(product_id) {
+        axios.delete(`/admin/cart/${product_id}`)
+            .then(res => {
+                const cart = this.state.cart.filter(c => c.id !== product_id);
+                this.setState({ cart }, this.updateBalance);
+            })
+            .catch(error => {
+                Swal.fire(
+                    'Error',
+                    error.response.data.message,
+                    'error'
+                );
+            });
+    }
+
+    handleEmptyCart() {
+        axios.delete('/admin/cart/empty')
+            .then(res => {
+                this.setState({ cart: [] }, () => {
+                    this.loadCart();
+                });
+            })
+            .catch(error => {
+                Swal.fire(
+                    'Error',
+                    error.response.data.message,
+                    'error'
+                );
+            });
+    }
+
+    handleSearchProduct(event) {
+        const search = event.target.value;
+        this.setState({ search }, () => {
+            this.handleSearch(search);
+        });
+    }
+
+    handleSearch(search) {
+        this.loadProducts(search);
+    }
+
+    handleAddToCart(barcode) {
+        axios.post('/admin/cart/store', { barcode })
+            .then(res => {
+                this.loadCart();
+                this.setState({ barcode: '' });
+            })
+            .catch(error => {
+                Swal.fire(
+                    'Error',
+                    error.response.data.message,
+                    'error'
+                );
+            });
+    }
+
+    setCustomerId(event) {
+        const customer_id = event.target.value;
+        this.setState({ customer_id });
+    }
+
     render() {
-        const { cart, barcode } = this.state;
+        const { cart, barcode, products, customers, paidAmount, balance } = this.state;
         return (
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="d-flex flex-wrap align-items-center justify-content-between mb-4"></div>
                     </div>
-                    <div className="col-md-5">
+                    <div className="col-md-5 mb-4">
                         <div className="row">
                             <div className="col mb-2">
                                 <form onSubmit={this.handleScanBarcode}>
@@ -67,7 +226,10 @@ class Cart extends Component {
                                 </form>
                             </div>
                             <div className="col mb-2">
-                                <select name="customer_id" id="customer_id" className="form-control">
+                                <select onChange={event => this.setCustomerId} className="form-control">
+                                    {customers.map(c => (
+                                        <option key={c.id} value={c.id}>{c.first_name} {c.last_name}</option>
+                                    ))}
                                     <option></option>
                                 </select>
                             </div>
@@ -79,6 +241,7 @@ class Cart extends Component {
                                                 <th>Product Name</th>
                                                 <th>Quantity</th>
                                                 <th className="text-right">Price</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody className="addMoreProduct">
@@ -87,13 +250,19 @@ class Cart extends Component {
                                                     <td name="product_name">{c.name}</td>
                                                     <td>
                                                         <input
-                                                            type="number"
+                                                            type="text"
                                                             name=""
                                                             defaultValue={c.pivot.quantity}
+                                                            onChange={event => this.handleOnChangeQuantity(c.id, event.target.value)}
                                                             className="form-control form-control-sm qty count"
                                                         />
                                                     </td>
-                                                    <td className="text-right price">{c.price * c.pivot.quantity}</td>
+                                                    <td className="text-right price">{(c.price * c.pivot.quantity).toFixed(2)}{window.APP.currency}</td>
+                                                    <td>
+                                                        <button className="btn-sm btn-danger delete" onClick={() => this.handleClickDelete(c.id)}>
+                                                            <i className="fa fa-times"></i>
+                                                        </button>
+                                                    </td>
                                                 </tr>
                                             ))}
                                         </tbody>
@@ -101,43 +270,53 @@ class Cart extends Component {
                                 </div>
                             </div>
                             <div className="col-6">Total:</div>
-                            <div className="col-6 text-right total mb-2"></div>
+                            <div className="col-6 text-right total mb-2">{this.getTotal(cart)}{window.APP.currency}</div>
                             <div className="col-10">Paid Amount:</div>
                             <input
                                 type="text"
                                 className="form-control form-control-sm col-2 text-right paid_amount mb-2"
                                 id="paid_amount"
+                                value={paidAmount}
+                                onChange={this.handlePaidAmountChange}
                             />
                             <div className="col-10">Balance:</div>
                             <input
                                 type="text"
                                 className="form-control form-control-sm col-2 text-right balance mb-2"
                                 id="balance"
+                                value={balance}
                                 readOnly
                             />
                             <div className="col-6">
-                                <button type="button" className="btn btn-danger btn-block">
+                                <button type="button" className="btn btn-danger btn-block" onClick={this.handleEmptyCart}
+                                disabled={!cart.length}>
                                     Cancel
                                 </button>
                             </div>
                             <div className="col-6">
-                                <button type="submit" className="btn btn-primary btn-block">
+                                <button type="submit" className="btn btn-primary btn-block" onClick={this.handleSubmit} disabled={!cart.length}>
                                     Submit
                                 </button>
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-7">
+                    <div className="col-md-7 mb-4">
                         <div className="mb-2">
-                            <input type="text" className="form-control" placeholder="Search Product..." />
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Search Product..."
+                                onChange={this.handleSearchProduct}
+                                value={this.state.search}
+                            />
                         </div>
                         <div className="order-product">
-                            <div className="item mr-2">
-                                <img src="" alt="" />
-                                <a href="#">
-                                    <h5>Apple</h5>
-                                </a>
-                            </div>
+                            {products.map(p => (
+                                <div onClick={() => this.handleAddToCart(p.barcode)} key={p.id} className="item mr-2">
+                                    <img src={p.image_url} alt="" />
+                                    <h5>{p.name}</h5>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
