@@ -111,10 +111,6 @@ class ProductController extends Controller
             $image_path = $request->file('image')->storeAs('products', $fileName, 'public');
             $requestData['image'] = '/storage/' . $image_path;
         }
-
-
-
-
         return [
             'name' => $request->name,
             'description' => $request->postDescription,

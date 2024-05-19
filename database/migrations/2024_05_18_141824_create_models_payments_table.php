@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('models_payments', function (Blueprint $table) {
             $table->id();
             $table->decimal('amount', 10, 4);
-            $table->foreignId('order_id');
+            $table->foreignId('models_order_id');
             $table->foreignId('user_id');
 
 
-            $table->foreign('order_id')->references('id')->on('models_orders')->onDelete('cascade');
+            $table->foreign('models_order_id')->references('id')->on('models_orders')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

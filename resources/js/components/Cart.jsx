@@ -30,6 +30,7 @@ class Cart extends Component {
         this.handleSearch = debounce(this.handleSearch.bind(this), 300);
         this.handleAddToCart = this.handleAddToCart.bind(this);
         this.setCustomerId = this.setCustomerId.bind(this);
+        this.handleClickSubmit = this.handleClickSubmit.bind(this);
     }
 
     componentDidMount() {
@@ -38,7 +39,7 @@ class Cart extends Component {
         this.loadCustomers();
     }
 
-    loadCustomers(){
+    loadCustomers() {
         axios.get('/admin/customers')
             .then((res) => {
                 const customers = res.data;
@@ -48,7 +49,7 @@ class Cart extends Component {
                 console.error(error);
                 Swal.fire(
                     'Error',
-                    'Failed to load products',
+                    'Failed to load customers',
                     'error'
                 );
             });
@@ -120,7 +121,7 @@ class Cart extends Component {
         });
         this.setState({ cart }, this.updateBalance);
         axios.post('/admin/cart/changeQuantity', { product_id, quantity })
-            .then(res => {})
+            .then(res => { })
             .catch(error => {
                 Swal.fire(
                     'Error',
@@ -204,6 +205,28 @@ class Cart extends Component {
         this.setState({ customer_id });
     }
 
+    handleClickSubmit() {
+        const { customer_id, paidAmount } = this.state;
+
+        axios.post('/admin/order/store', { customer_id, amount: paidAmount })
+            .then(res => {
+                Swal.fire(
+                    'Success',
+                    'Order placed successfully!',
+                    'success'
+                );
+                this.loadCart();
+            })
+            .catch(error => {
+                Swal.fire(
+                    'Error',
+                    error.response.data.message,
+                    'error'
+                );
+            });
+    }
+
+
     render() {
         const { cart, barcode, products, customers, paidAmount, balance } = this.state;
         return (
@@ -226,7 +249,7 @@ class Cart extends Component {
                                 </form>
                             </div>
                             <div className="col mb-2">
-                                <select onChange={event => this.setCustomerId} className="form-control">
+                                <select onChange={this.setCustomerId} className="form-control">
                                     {customers.map(c => (
                                         <option key={c.id} value={c.id}>{c.first_name} {c.last_name}</option>
                                     ))}
@@ -289,12 +312,12 @@ class Cart extends Component {
                             />
                             <div className="col-6">
                                 <button type="button" className="btn btn-danger btn-block" onClick={this.handleEmptyCart}
-                                disabled={!cart.length}>
+                                    disabled={!cart.length}>
                                     Cancel
                                 </button>
                             </div>
                             <div className="col-6">
-                                <button type="submit" className="btn btn-primary btn-block" onClick={this.handleSubmit} disabled={!cart.length}>
+                                <button type="submit" className="btn btn-primary btn-block" disabled={!cart.length} onClick={() => this.handleClickSubmit()}>
                                     Submit
                                 </button>
                             </div>

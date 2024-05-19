@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SuppliersController;
 use App\Http\Controllers\TransactionsController;
 
@@ -28,6 +29,8 @@ Route::prefix('admin')->group(function () {
     Route::post('/cart/store', [CartController::class, 'store'])->name('cart.store');
     Route::post('/cart/changeQuantity', [CartController::class, 'changeQuantity'])->name('cart.changeQuantity');
     Route::delete('/cart/empty', [CartController::class, 'empty'])->name('cart.empty');
+    Route::post('/order/store', [OrderController::class, 'store']);
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 
     Route::resource('products', ProductController::class);
     Route::resource('customers', CustomerController::class);
