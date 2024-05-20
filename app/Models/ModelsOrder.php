@@ -45,6 +45,17 @@ class ModelsOrder extends Model
         return number_format($this->total(), 2);
     }
 
+    public function totalSoldItem()
+    {
+        return $this->items->map(function ($i) {
+            return $i->quantity;
+        })->sum();
+    }
+    public function formattedTotalSoldItem()
+    {
+        return number_format($this->totalSoldItem());
+    }
+
     public function receivedAmount()
     {
         return $this->payments->map(function ($i) {
@@ -55,5 +66,16 @@ class ModelsOrder extends Model
     public function formattedReceivedAmount()
     {
         return number_format($this->receivedAmount(), 2);
+    }
+    public function receivedBalance()
+    {
+        return $this->payments->map(function ($i) {
+            return $i->balance;
+        })->sum();
+    }
+
+    public function formattedReceivedBalance()
+    {
+        return number_format($this->receivedBalance(), 2);
     }
 }

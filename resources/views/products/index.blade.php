@@ -9,15 +9,24 @@
                         <div>
                             <h4 class="mb-3">{{ __('Product List') }}</h4>
                         </div>
+                        <form action="{{ route('products.index') }}" method="GET">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search Product..." name="search"
+                                    value="">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit"><i class="las la-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
                         <a href="{{ route('products.create') }}" class="btn btn-primary add-list"><i
-                                class="las la-plus mr-3"></i>Add
-                            Product</a>
+                                class="las la-plus mr-3"></i>Add Product</a>
                     </div>
+
                 </div>
 
                 <div class="col-lg-12">
                     <div class="table-responsive rounded mb-3">
-                        <table class="table mb-0 tbl-server-info">
+                        <table class="table mb-0 tbl-server-info mt-3">
                             <thead class="bg-white text-uppercase">
                                 <tr class="ligth ligth-data">
                                     <th>

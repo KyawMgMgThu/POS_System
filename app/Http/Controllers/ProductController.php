@@ -17,7 +17,6 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $query = ModelsProduct::query();
-
         if ($request->search) {
             $query->where('name', 'like', '%' . $request->search . '%');
         }

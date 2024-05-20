@@ -1,22 +1,27 @@
 <?php
 
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\CartDetailController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SuppliersController;
+use App\Http\Controllers\CartDetailController;
+use App\Http\Controllers\TermsOfServiceController;
 use App\Http\Controllers\TransactionsController;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-Auth::routes();
+Auth::user();
+
+
 
 
 
@@ -31,6 +36,11 @@ Route::prefix('admin')->group(function () {
     Route::delete('/cart/empty', [CartController::class, 'empty'])->name('cart.empty');
     Route::post('/order/store', [OrderController::class, 'store']);
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/report', [ReportController::class, 'index'])->name('report.index');
+    Route::get('/fetch-chart-data/{timeframe}', [OrderController::class, 'fetchChartData'])->name('fetch.chart.data');
+    Route::get('/privacy-policy', [PrivacyController::class, 'index'])->name('privacy#privacy-policy');
+    Route::get('/terms-of-service', [TermsOfServiceController::class, 'index'])->name('terms-of-service');
+
 
     Route::resource('products', ProductController::class);
     Route::resource('customers', CustomerController::class);

@@ -206,9 +206,9 @@ class Cart extends Component {
     }
 
     handleClickSubmit() {
-        const { customer_id, paidAmount } = this.state;
+        const { customer_id, paidAmount, balance } = this.state;
 
-        axios.post('/admin/order/store', { customer_id, amount: paidAmount })
+        axios.post('/admin/order/store', { customer_id, amount: paidAmount , balance })
             .then(res => {
                 Swal.fire(
                     'Success',
@@ -298,11 +298,10 @@ class Cart extends Component {
                             <input
                                 type="text"
                                 className="form-control form-control-sm col-2 text-right paid_amount mb-2"
-                                id="paid_amount"
                                 value={paidAmount}
                                 onChange={this.handlePaidAmountChange}
                             />
-                            <div className="col-10">Balance:</div>
+                            <div className="col-10" value={paidAmount}>Balance:</div>
                             <input
                                 type="text"
                                 className="form-control form-control-sm col-2 text-right balance mb-2"

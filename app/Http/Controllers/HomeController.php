@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ModelsOrder;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -21,8 +22,18 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('home');
+        $orders = ModelsOrder::latest()->paginate(5);
+        $total = $orders->map(function ($i) {
+            return $i->total();
+        })->sum();
+        $revievedAmount = $orders->map(function ($i) {
+            return $i->receivedAmount();
+        })->sum();
+        $totalSellProduct = $orders->map(function ($i) {
+            return $i->totalSoldItem();
+        })->sum();
+        return view('home', compact('total', 'revievedAmount', 'totalSellProduct', 'orders'));
     }
 }
