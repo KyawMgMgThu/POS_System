@@ -16,7 +16,8 @@
                             <script>
                                 document.write(new Date().getFullYear())
                             </script>©
-                        </span> <a href="#" class="">@yield('title', config('app.name'))</a>.
+                        </span> <a href="https://www.facebook.com/profile.php?id=100057101206481&mibextid=ZbWKwL"
+                            class="">@yield('title', config('app.name'))</a>.
                     </div>
                 </div>
             </div>

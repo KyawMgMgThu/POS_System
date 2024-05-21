@@ -42,7 +42,7 @@ class CustomerController extends Controller
         $this->CustomerValidation($request);
         $data = $this->getCustomerData($request);
         ModelsCustomer::create($data);
-        return redirect()->route('customers.index')->with('success', __('customer.succes_creating'));
+        return redirect()->route('customers.index')->with('success', 'customer created successfully');
     }
 
     /**
@@ -74,7 +74,7 @@ class CustomerController extends Controller
         $id = $request->id;
         ModelsCustomer::where('id', $id)->update($updateData);
 
-        return redirect()->route('customers.index')->with('success', __('customer.success_updating'));
+        return redirect()->route('customers.index')->with('success', 'customer updated successfully');
     }
 
     /**

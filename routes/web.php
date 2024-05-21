@@ -11,15 +11,17 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\SuppliersController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CartDetailController;
-use App\Http\Controllers\TermsOfServiceController;
 use App\Http\Controllers\TransactionsController;
+use App\Http\Controllers\TermsOfServiceController;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
 Auth::user();
+
 
 
 

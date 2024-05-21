@@ -45,45 +45,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="category">Category</label>
-                                            <select name="category"
-                                                class="@error('category')
-                                            is-invalid
-                                        @enderror form-control"
-                                                data-style="py-0">
-                                                <option>Beauty</option>
-                                                <option>Grocery</option>
-                                                <option>Food</option>
-                                                <option>Furniture</option>
-                                                <option>Shoes</option>
-                                                <option>Frames</option>
-                                                <option>Jewellery</option>
-                                            </select>
-                                            @error('category')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="cost">Cost</label>
-                                            <input type="text"
-                                                class="form-control @error('cost')
-                                        is-invalid
-                                        @enderror"
-                                                value="{{ old('cost') }}" name="cost" placeholder="Enter Cost"
-                                                data-errors="Please Enter Cost">
-                                            @error('name')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
+
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="price">Price</label>

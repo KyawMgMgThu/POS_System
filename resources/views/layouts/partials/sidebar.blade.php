@@ -160,12 +160,16 @@
                             </a>
                             <ul id="auth" class="iq-submenu collapse" data-parent="#otherpage">
                                 <li class="">
-                                    <a href="{{ route('logout') }}">
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                        style="display: none;">
+                                        @csrf
+                                    </form>
+                                    <a href="#"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         <i class="las la-minus"></i><span>Logout</span>
                                     </a>
-
-
                                 </li>
+
                                 <li class="">
                                     <a href="{{ route('password.request') }}">
                                         <i class="las la-minus"></i><span>Recover Password</span>
@@ -195,7 +199,7 @@
             <div class="card border-none">
                 <div class="card-body p-0">
                     <div class="sidebarbottom-content">
-                        <div class="image"><img src="../assets/images/layouts/side-bkg.png"
+                        <div class="image"><img src="{{ asset('assets/images/layouts/side-bkg.png') }}"
                                 class="img-fluid rounded-circle" alt="side-bkg"></div>
                         <h6 class="mt-4 px-4 body-title">Let's upgrade your marketing using a POS system</h6>
 

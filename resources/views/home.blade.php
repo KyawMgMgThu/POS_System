@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-
+@section('navtitle', 'Dashboard')
 @section('content')
     <div class="content-page">
         <div class="container-fluid">
@@ -141,7 +141,7 @@
         function renderPriceChart(data) {
             var options = {
                 series: [{
-                    name: 'One Day Income',
+                    name: 'Income',
                     data: data.map(item => item.total_price)
                 }],
                 chart: {
@@ -194,11 +194,6 @@
                 },
                 tooltip: {
                     theme: 'light',
-                    x: {
-                        formatter: function(val) {
-                            return 'Day: ' + val;
-                        }
-                    },
                     style: {
                         fontSize: '12px'
                     }
@@ -220,8 +215,13 @@
                 }],
                 chart: {
                     type: 'line',
-                    height: 350
+                    height: 350,
+                    animations: {
+                        duration: 800,
+                        easing: 'linear',
+                    },
                 },
+
                 xaxis: {
                     categories: data.map(item => item.day || item.month || item.year)
                 }

@@ -83,7 +83,7 @@ class ProductController extends Controller
         $updateData = $this->getProductData($request);
         $id = $request->id;
         ModelsProduct::where('id', $id)->update($updateData);
-        return redirect()->route('products.index')->with('success', __('products.success_updating'));
+        return redirect()->route('products.index')->with('success', 'Product updated successfully');
     }
 
     /**
