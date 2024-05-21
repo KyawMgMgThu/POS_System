@@ -37,21 +37,7 @@
 
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="app_description">App Description</label>
-                                            <textarea type="text" class="form-control @error('app_description') is-invalid @enderror" id="app_description"
-                                                placeholder="Enter App Description" name="app_description" data-errors="Please Enter App Description">{{ old('app_description', Config('settings.app_description')) }}</textarea>
-                                            @error('app_description')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
 
-                                </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
