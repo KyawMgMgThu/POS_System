@@ -47,6 +47,7 @@
     <script>
         window.APP = <?php echo json_encode([
             'currency' => config('settings.currency_symbol'),
+            'warning_quantity' => config('settings.warning_quantity'),
         ]); ?>;
     </script>
 
@@ -64,6 +65,13 @@
                 Swal.fire({
                     icon: 'error',
                     title: '{{ Session::get('error') }}',
+                    timer: 3000,
+                });
+            @endif
+            @if (Session::has('message'))
+                Swal.fire({
+                    icon: 'error',
+                    title: '{{ Session::get('message') }}',
                     timer: 3000,
                 });
             @endif

@@ -25,13 +25,23 @@ class CartController extends Controller
         ]);
 
         $barcode = $request->input('barcode');
-
+        $product = ModelsProduct::where('barcode', $barcode)->first();
         $cartItem = $request->user()->cart()->where('barcode', $barcode)->first();
+
         if ($cartItem) {
-            $cartItem->pivot->quantity = $cartItem->pivot->quantity + 1;
+            if ($product->quantity < 5) {
+                return response([
+                    'message' => 'Product available: ' . $product->quantity,
+                ], 400);
+            }
+            $cartItem->pivot->quantity += 1;
             $cartItem->pivot->save();
         } else {
-            $product = ModelsProduct::where('barcode', $barcode)->first();
+            if ($product->quantity < 1) {
+                return response([
+                    'message' => 'Product is out of stock',
+                ], 400);
+            }
             $request->user()->cart()->attach($product->id, [
                 'quantity' => 1
             ]);
@@ -48,6 +58,7 @@ class CartController extends Controller
         ]);
         $cart = $request->user()->cart()->where('id', $request->product_id)->first();
         if ($cart) {
+
             $cart->pivot->quantity = $request->quantity;
             $cart->pivot->save();
         }

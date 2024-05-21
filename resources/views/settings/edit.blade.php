@@ -70,6 +70,24 @@
                                     </div>
 
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="warning_quantity">Warning Quantity</label>
+                                            <input type="text"
+                                                class="form-control @error('warning_quantity') is-invalid @enderror"
+                                                id="warning_quantity" placeholder="Warning Quantity" name="warning_quantity"
+                                                data-errors="Please Enter Warning Quantity"
+                                                value="{{ old('warning_quantity', config('settings.warning_quantity')) }}">
+                                            @error('warning_quantity')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                </div>
                                 <button type="submit" class="btn btn-primary mr-2">Change Setting</button>
                             </form>
                         </div>

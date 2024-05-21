@@ -359,7 +359,7 @@ class Cart extends Component {
                             {products.map(p => (
                                 <div onClick={() => this.handleAddToCart(p.barcode)} key={p.id} className="item mr-2">
                                     <img src={p.image_url} alt="" />
-                                    <h5>{p.name}</h5>
+                                    <h5 style={window.APP.warning_quantity > p.quantity ? { color: 'red' } : null}>{p.name}</h5>
                                 </div>
                             ))}
                         </div>
