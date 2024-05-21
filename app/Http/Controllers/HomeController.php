@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $orders = ModelsOrder::latest()->paginate(5);
+        $orders = ModelsOrder::all();
         $total = $orders->map(function ($i) {
             return $i->total();
         })->sum();

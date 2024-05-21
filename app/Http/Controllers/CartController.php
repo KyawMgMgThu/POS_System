@@ -57,12 +57,12 @@ class CartController extends Controller
     }
     public function destroy(Request $request, $id)
     {
-        // Assuming you want to delete a cart item by its ID
+
         $cartItem = $request->user()->cart()->where('id', $id)->first();
         if ($cartItem) {
             $cartItem->pivot->delete();
         } else {
-            // Handle case where the cart item with the given ID doesn't exist
+
             return response()->json(['error' => 'Cart item not found'], 404);
         }
 

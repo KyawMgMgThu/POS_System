@@ -56,14 +56,18 @@
                             </div>
                             <div class="card-header-toolbar d-flex align-items-center">
                                 <div class="dropdown">
-                                    <button class="dropdown-toggle dropdown-bg btn" type="button" id="timeframeDropdown"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        This Month <i class="ri-arrow-down-s-line ml-1"></i>
+                                    <button class="dropdown-toggle dropdown-bg btn" type="button"
+                                        id="timeframeDropdownButton" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        Time Frame <i class="ri-arrow-down-s-line ml-1"></i>
                                     </button>
-                                    <div class="dropdown-menu" aria-labelledby="timeframeDropdown">
-                                        <a class="dropdown-item" href="#" onclick="changeTimeFrame('day')">Day</a>
-                                        <a class="dropdown-item" href="#" onclick="changeTimeFrame('month')">Month</a>
-                                        <a class="dropdown-item" href="#" onclick="changeTimeFrame('year')">Year</a>
+                                    <div class="dropdown-menu" aria-labelledby="timeframeDropdownButton">
+                                        <a class="dropdown-item" href="#"
+                                            onclick="changeTimeFrame('day', 'Day')">Day</a>
+                                        <a class="dropdown-item" href="#"
+                                            onclick="changeTimeFrame('month', 'Month')">Month</a>
+                                        <a class="dropdown-item" href="#"
+                                            onclick="changeTimeFrame('year', 'Year')">Year</a>
                                     </div>
                                 </div>
                             </div>
@@ -81,14 +85,18 @@
                             </div>
                             <div class="card-header-toolbar d-flex align-items-center">
                                 <div class="dropdown">
-                                    <button class="dropdown-toggle dropdown-bg btn" type="button" id="timeframeDropdown"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        This Month <i class="ri-arrow-down-s-line ml-1"></i>
+                                    <button class="dropdown-toggle dropdown-bg btn" type="button"
+                                        id="timeframeDropdownButton" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        Time Frame <i class="ri-arrow-down-s-line ml-1"></i>
                                     </button>
-                                    <div class="dropdown-menu" aria-labelledby="timeframeDropdown">
-                                        <a class="dropdown-item" href="#" onclick="changeTimeFrame('day')">Day</a>
-                                        <a class="dropdown-item" href="#" onclick="changeTimeFrame('month')">Month</a>
-                                        <a class="dropdown-item" href="#" onclick="changeTimeFrame('year')">Year</a>
+                                    <div class="dropdown-menu" aria-labelledby="timeframeDropdownButton">
+                                        <a class="dropdown-item" href="#"
+                                            onclick="changeTimeFrame('day', 'Day')">Day</a>
+                                        <a class="dropdown-item" href="#"
+                                            onclick="changeTimeFrame('month', 'Month')">Month</a>
+                                        <a class="dropdown-item" href="#"
+                                            onclick="changeTimeFrame('year', 'Year')">Year</a>
                                     </div>
                                 </div>
                             </div>
@@ -202,7 +210,6 @@
 
             var chart = new ApexCharts(document.querySelector("#price-chart"), options);
             chart.render();
-
         }
 
         function renderOrderCountChart(data) {

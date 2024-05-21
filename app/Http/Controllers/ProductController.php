@@ -61,14 +61,12 @@ class ProductController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit($id)
     {
-        //
+
         $product = ModelsProduct::where('id', $id)->first()->toArray();
-        // Delete old image
+
         if ($product['image']) {
             Storage::delete($product['image']);
         }

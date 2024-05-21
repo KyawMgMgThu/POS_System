@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { sum, debounce } from 'lodash';
+import jsPDF from 'jspdf';
 import './Cart';
 
 class Cart extends Component {
@@ -31,6 +32,7 @@ class Cart extends Component {
         this.handleAddToCart = this.handleAddToCart.bind(this);
         this.setCustomerId = this.setCustomerId.bind(this);
         this.handleClickSubmit = this.handleClickSubmit.bind(this);
+        this.generatePDF = this.generatePDF.bind(this);
     }
 
     componentDidMount() {
@@ -215,6 +217,7 @@ class Cart extends Component {
                     'Order placed successfully!',
                     'success'
                 );
+                this.generatePDF();
                 this.loadCart();
             })
             .catch(error => {
@@ -226,6 +229,26 @@ class Cart extends Component {
             });
     }
 
+    generatePDF() {
+        const { cart, paidAmount, balance, customers, customer_id } = this.state;
+        const customer = customers.find(c => c.id === parseInt(customer_id));
+
+        const doc = new jsPDF();
+        doc.setFontSize(18);
+        doc.text('Voucher', 105, 10, null, null, 'center');
+        doc.setFontSize(12);
+        doc.text(`Customer Name: ${customer ? customer.first_name + ' ' + customer.last_name : 'N/A'}`, 10, 20);
+        doc.text(`Date: ${new Date().toLocaleDateString()} \t Time: ${new Date().toLocaleTimeString()} \t`, 10, 30);
+        cart.forEach((item, index) => {
+            doc.text(`Products Name: ${item.name} - Quantity: ${item.pivot.quantity} - Price: ${(item.price * item.pivot.quantity).toFixed(2)}`, 10, 40 + (index * 10));
+        });
+
+        doc.text(`Total: ${this.getTotal(cart)}${window.APP.currency}`, 10, 40 + (cart.length * 10) + 10);
+        doc.text(`Paid Amount: ${paidAmount}${window.APP.currency}`, 10, 40 + (cart.length * 10) + 20);
+        doc.text(`Balance: ${balance}${window.APP.currency}`, 10, 40 + (cart.length * 10) + 30);
+
+        doc.save('voucher.pdf');
+    }
 
     render() {
         const { cart, barcode, products, customers, paidAmount, balance } = this.state;
@@ -250,10 +273,10 @@ class Cart extends Component {
                             </div>
                             <div className="col mb-2">
                                 <select onChange={this.setCustomerId} className="form-control">
+                                    <option value="">Select Customer</option>
                                     {customers.map(c => (
                                         <option key={c.id} value={c.id}>{c.first_name} {c.last_name}</option>
                                     ))}
-                                    <option></option>
                                 </select>
                             </div>
                             <div className="col-md-12">
@@ -274,7 +297,7 @@ class Cart extends Component {
                                                     <td>
                                                         <input
                                                             type="text"
-                                                            name=""
+                                                            name="quantity"
                                                             defaultValue={c.pivot.quantity}
                                                             onChange={event => this.handleOnChangeQuantity(c.id, event.target.value)}
                                                             className="form-control form-control-sm qty count"
@@ -301,7 +324,7 @@ class Cart extends Component {
                                 value={paidAmount}
                                 onChange={this.handlePaidAmountChange}
                             />
-                            <div className="col-10" value={paidAmount}>Balance:</div>
+                            <div className="col-10">Balance:</div>
                             <input
                                 type="text"
                                 className="form-control form-control-sm col-2 text-right balance mb-2"
@@ -316,7 +339,7 @@ class Cart extends Component {
                                 </button>
                             </div>
                             <div className="col-6">
-                                <button type="submit" className="btn btn-primary btn-block" disabled={!cart.length} onClick={() => this.handleClickSubmit()}>
+                                <button type="submit" className="btn btn-primary btn-block" disabled={!cart.length} onClick={this.handleClickSubmit}>
                                     Submit
                                 </button>
                             </div>

@@ -18,7 +18,11 @@
         "vite": "^5.2.11"
     },
     "dependencies": {
+        "html2canvas": "^1.4.1",
+        "jspdf": "^2.5.1",
+        "jspdf-autotable": "^3.8.2",
         "lodash": "^4.17.21",
+        "prop-types": "^15.8.1",
         "sweetalert2": "^11.11.0"
     }
 }
